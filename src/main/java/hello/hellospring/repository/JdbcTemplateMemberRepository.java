@@ -51,6 +51,13 @@ public class JdbcTemplateMemberRepository implements MemberRepository {
     }
 
     @Override
+    public Optional<Member> findByEmail(String email) {
+        List<Member> result =  jdbcTemplate.query("select * from member where email = ?", memberRowMapper(), email);
+
+        return  result.stream().findAny();
+    }
+
+    @Override
     public List<Member> findAll() {
         return jdbcTemplate.query("select * from member", memberRowMapper());
     }
